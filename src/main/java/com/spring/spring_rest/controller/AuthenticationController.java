@@ -1,24 +1,29 @@
 package com.spring.spring_rest.controller;
 
+
 import java.util.Collections;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import com.spring.spring_rest.dto.AuthLoginDto;
 import com.spring.spring_rest.dto.AuthRoleRegisterDto;
 import com.spring.spring_rest.dto.AuthUserRegisterDto;
 import com.spring.spring_rest.entity.Auth_Roles;
 import com.spring.spring_rest.entity.Auth_User;
 import com.spring.spring_rest.repository.AuthRoleRepository;
 import com.spring.spring_rest.repository.AuthUserRepository;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
-
+/**
+ * AuthenticationController.
+ */
 @RestController 
 @RequestMapping ("/api/auth")
 public class AuthenticationController {
@@ -68,7 +73,7 @@ public class AuthenticationController {
     }
 
     /**
-     * 
+     * Method to register auth roles.
      * @param authRoleRegisterDto
      * @return
      */
@@ -89,7 +94,7 @@ public class AuthenticationController {
     
 
     /**
-     * 
+     * Method to register auth users. 
      * @param authUserRegisterDto
      * @return
      */
@@ -113,4 +118,18 @@ public class AuthenticationController {
         return new ResponseEntity<>(auth_user.getUsername() + " successfully created", HttpStatus.OK);
     }
     
+    /**
+     * Method to login.
+     * @param authLoginDto
+     * @return
+     */
+    @PostMapping ("/auth_login")
+    public ResponseEntity<String> login (@RequestBody AuthLoginDto authLoginDto) {
+        Authentication authenticate = authManager.authenticate(
+            new UsernamePasswordAuthenticationToken(authLoginDto.getUsername(), 
+                                                    authLoginDto.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authenticate);
+        return new ResponseEntity<>("Signed in successfully!", HttpStatus.OK);
+    }
 }
