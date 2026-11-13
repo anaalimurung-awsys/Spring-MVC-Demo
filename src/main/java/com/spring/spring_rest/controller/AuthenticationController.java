@@ -12,7 +12,8 @@ import com.spring.spring_rest.repository.AuthUserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.
+        UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -32,8 +33,10 @@ public class AuthenticationController {
     private AuthRoleRepository authRoleRepo;
     private BCryptPasswordEncoder passwordEncoder;
     
-    public AuthenticationController(AuthenticationManager authManager, AuthUserRepository authUserRepo,
-            AuthRoleRepository authRoleRepo, BCryptPasswordEncoder passwordEncoder) {
+    public AuthenticationController(AuthenticationManager authManager, 
+            AuthUserRepository authUserRepo,
+            AuthRoleRepository authRoleRepo, 
+            BCryptPasswordEncoder passwordEncoder) {
         this.authManager = authManager;
         this.authUserRepo = authUserRepo;
         this.authRoleRepo = authRoleRepo;
@@ -82,17 +85,18 @@ public class AuthenticationController {
         @RequestBody AuthRoleRegisterDto authRoleRegisterDto
     ) {
         if(authRoleRepo.existsByName(authRoleRegisterDto.getName())) 
-            return new ResponseEntity<>(authRoleRegisterDto.getName() + " already created", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(authRoleRegisterDto.getName() 
+                             + " already created", HttpStatus.BAD_REQUEST);
 
         Auth_Roles auth_role = new Auth_Roles();
         auth_role.setName(authRoleRegisterDto.getName());
 
         authRoleRepo.save(auth_role);
 
-        return new ResponseEntity<>(auth_role.getName() + " successfully created", HttpStatus.OK);
+        return new ResponseEntity<>(auth_role.getName() 
+                + " successfully created", HttpStatus.OK);
     }
     
-
     /**
      * Method to register auth users. 
      * @param authUserRegisterDto
@@ -103,19 +107,23 @@ public class AuthenticationController {
         @RequestBody AuthUserRegisterDto authUserRegisterDto
     ) {
         if(authUserRepo.existsByUsername(authUserRegisterDto.getUsername())) 
-            return new ResponseEntity<>(authUserRegisterDto.getUsername() + " already taken", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(authUserRegisterDto.getUsername() 
+                                + " already taken", HttpStatus.BAD_REQUEST);
 
         Auth_User auth_user = new Auth_User();
         auth_user.setUsername(authUserRegisterDto.getUsername());
-        auth_user.setPassword(passwordEncoder.encode(authUserRegisterDto.getPassword()));
+        auth_user.setPassword(passwordEncoder.encode(authUserRegisterDto
+                                                        .getPassword()));
 
         Auth_Roles auth_role = authRoleRepo.findByName("USER")
-                                .orElseThrow(() -> new RuntimeException("Roles USER not found"));
+                            .orElseThrow(() -> 
+                            new RuntimeException("Roles USER not found"));
         auth_user.setRoles(Collections.singletonList(auth_role));
 
         authUserRepo.save(auth_user);
 
-        return new ResponseEntity<>(auth_user.getUsername() + " successfully created", HttpStatus.OK);
+        return new ResponseEntity<>(auth_user.getUsername() 
+                                + " successfully created", HttpStatus.OK);
     }
     
     /**

@@ -63,8 +63,8 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentDto updateStudent(Long id, StudentDto studDto) {
         Student stud = studRepo.findById((id)).orElseThrow(() -> 
-                                        new StudentNotFoundException("Student " 
-                                        + id + " not found."));
+                                    new StudentNotFoundException("Student "
+                                    + id + " not found."));
 
         stud.setFirstName(studDto.getFirstName());
         stud.setLastName(studDto.getLastName());
