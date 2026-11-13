@@ -20,9 +20,15 @@ public class SecurityConfig {
    private CustomUserDetailsService userDetailsService;
 
     public SecurityConfig(CustomUserDetailsService userDetailsService) {
-    this.userDetailsService = userDetailsService;
-}
+        this.userDetailsService = userDetailsService;
+    }
 
+    /**
+     * Function to filter requests.
+     * @param sec
+     * @return
+     * @throws Exception
+     */
     @Bean 
     SecurityFilterChain filterChain(HttpSecurity sec) throws Exception {
         return sec.csrf(AbstractHttpConfigurer::disable)
@@ -52,7 +58,7 @@ public class SecurityConfig {
     }
 
     /**
-     * 
+     * Method to manually authenticate users.
      * @param authentication
      * @return
      * @throws Exception

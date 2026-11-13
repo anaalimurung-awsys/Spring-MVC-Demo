@@ -36,9 +36,12 @@ public class CustomUserDetailsService implements UserDetailsService {
         return new User(user.getUsername(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
     }
 
+    /**
+     * Method to convert Auth_Roles objects to GrantedAuthority objects.
+     * @param roles
+     * @return
+     */
     private Collection<GrantedAuthority> mapRolesToAuthorities(List<Auth_Roles> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
-
-    
 }

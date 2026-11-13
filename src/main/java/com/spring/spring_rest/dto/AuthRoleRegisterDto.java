@@ -1,5 +1,9 @@
 package com.spring.spring_rest.dto;
 
+/**
+ * 
+ * AuthRoleRegisterDto
+ */
 public class AuthRoleRegisterDto {
     private String name;
 
@@ -15,6 +19,4 @@ public class AuthRoleRegisterDto {
     public void setName(String name) {
         this.name = name;
     }
-
-    
 }

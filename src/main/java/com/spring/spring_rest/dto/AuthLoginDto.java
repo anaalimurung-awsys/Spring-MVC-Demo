@@ -1,5 +1,9 @@
 package com.spring.spring_rest.dto;
 
+/**
+ * 
+ * AuthLoginDto
+ */
 public class AuthLoginDto {
     private String username;
     private String password;

@@ -1,5 +1,9 @@
 package com.spring.spring_rest.dto;
 
+/**
+ * 
+ * AuthUserRegisterDto
+ */
 public class AuthUserRegisterDto {
     private String username;
     private String password;
@@ -24,6 +28,4 @@ public class AuthUserRegisterDto {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    
 }
