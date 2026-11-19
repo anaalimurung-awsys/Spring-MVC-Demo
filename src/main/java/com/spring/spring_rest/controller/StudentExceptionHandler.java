@@ -22,6 +22,7 @@ public class StudentExceptionHandler {
      * @param e
      * @return
      */
+    @ExceptionHandler 
     public ResponseEntity<StudentErrorResponse> handlException(
         StudentNotFoundException e) {
 
@@ -39,7 +40,7 @@ public class StudentExceptionHandler {
         StudentErrorResponse err = new StudentErrorResponse();
 
         err.setStatus(HttpStatus.BAD_REQUEST.value());
-        err.setMessage("Invalid data. Only integers are accepted");
+        err.setMessage("Invalid data.");
         err.setTimeStamp(System.currentTimeMillis());
 
         return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);

@@ -1,10 +1,7 @@
 package com.spring.spring_rest.controller;
 
 import com.spring.spring_rest.dto.StudentDto;
-// import com.spring.spring_rest.entity.Student;
-// import com.spring.spring_rest.exception.StudentNotFoundException;
 import com.spring.spring_rest.service.StudentService;
-// import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.http.HttpStatus;
