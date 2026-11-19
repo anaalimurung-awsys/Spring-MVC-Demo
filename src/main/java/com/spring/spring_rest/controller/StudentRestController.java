@@ -39,7 +39,8 @@ public class StudentRestController {
      * @return
      */
     @PostMapping
-    public ResponseEntity<StudentDto> createStudents(@Valid @RequestBody StudentDto studDto) {
+    public ResponseEntity<StudentDto> createStudents(@Valid 
+                        @RequestBody StudentDto studDto) {
         StudentDto saved = studService.createStudent(studDto);
 
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
@@ -106,33 +107,4 @@ public class StudentRestController {
 
         return ResponseEntity.ok("Student data deleted successfully");
     }
-
-    // @PostConstruct 
-    // public void initialize() {
-    //     studs = new ArrayList<>();
-        
-    //     // studs.add(new Student("Juuzou", "Suzuya"));
-    //     // studs.add(new Student("Muichirou", "Tokitou"));
-    //     // studs.add(new Student("Yuichirou", "Tokitou"));
-    // }
-
-    // @GetMapping("/students")
-    // public List<Student> getStudents() {
-    //     return studs;
-    // }
-
-    // /**
-    //  * For path variables.
-    //  * @param id
-    //  * @return
-    //  */
-    // @GetMapping("/students/{id}")
-    // public Student getStudent(@PathVariable int id) {
-        
-    //     if(id >= studs.size() || id < 0) 
-    //         throw new StudentNotFoundException("Student id " + id + 
-    //                                             " not found!");
-
-    //     return studs.get(id);
-    // }
 }
