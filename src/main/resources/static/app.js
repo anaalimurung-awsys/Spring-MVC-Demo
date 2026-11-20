@@ -1,4 +1,5 @@
 const API_URL = "http://localhost:8080/api/students";
+const API_AUTH = "http://localhost:8080/api/auth";
 
 /**
  * Function to create a student.
@@ -8,7 +9,8 @@ async function createStudent(studentData) {
         const response = await fetch(API_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json"},
-            body: JSON.stringify(studentData)
+            body: JSON.stringify(studentData),
+            credentials: "include"
         });
 
         if(response.ok) {
@@ -133,7 +135,9 @@ function clearValidationStyles() {
  */
 async function getAllStudents() {
     try {
-        const response = await fetch(API_URL);
+        const response = await fetch(API_URL, {
+            credentials: "include"
+        });
 
         if (!response.ok) throw new Error("Network response was not ok");
 
@@ -173,7 +177,9 @@ document.addEventListener("DOMContentLoaded", getAllStudents);
  */
 async function initializeStudentFormById(id) {
     try {
-        const response = await fetch(`${API_URL}/${id}`);
+        const response = await fetch(`${API_URL}/${id}`, {
+            credentials: "include"
+        });
 
         if (!response.ok) throw new Error("Could not fetch student details");
 
@@ -203,7 +209,8 @@ async function updateStudent(id, studentData) {
         const response = await fetch(`${API_URL}/${id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json"},
-            body: JSON.stringify(studentData)
+            body: JSON.stringify(studentData),
+            credentials: "include"
         });
 
         if (response.ok) {
@@ -226,7 +233,8 @@ async function deleteStudent(id) {
     if (confirm("Are you sure you want to delete this student?")) {
         try {
             const response = await fetch(`${API_URL}/${id}`, {
-                method: "DELETE"
+                method: "DELETE",
+                credentials: "include"
             });
 
             if (response.ok) {
@@ -239,5 +247,60 @@ async function deleteStudent(id) {
         } catch (e) {
             console.error("Error deleting student:", e);
         }
+    }
+}
+
+/**
+ * For Log-In.
+ */
+async function loginUser(loginDto) {
+    try {
+        const response = await fetch(`${API_AUTH}/auth_login_session`,{
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(loginDto),
+            credentials: "include"
+        });
+
+        if (response.ok) {
+            alert("Login successful");
+            window.location.href = "index.html";
+        } else {
+            alert("Invalid credentials");
+        }
+    } catch (e) {
+        console.error("Login error", e);
+    }
+}
+
+/**
+ * Method for log out.
+ */
+async function logoutUser() {
+    try {
+        await fetch(`${API_AUTH}/logout`, {
+            method: "POST",
+            credentials: "include"
+        });
+
+        document.getElementById("studentTableBody").innerHTML = "";
+        resetForm();
+        alert("Logged out successfully!");
+        window.location.href = "index.html";
+
+        try {
+            await fetch(API_URL, {
+                method: "GET",
+                headers: {
+                    "Authorization": "Basic " + btoa("invalid_user:wrong_password")
+                }
+            });
+        } catch (e) {
+            console.log("Browser credential cleared");
+        }
+
+        window.location.reload();
+    } catch (er) {
+        console.error("Logout transmission crash:", er);
     }
 }
