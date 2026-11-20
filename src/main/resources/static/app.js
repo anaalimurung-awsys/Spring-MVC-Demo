@@ -28,7 +28,7 @@ async function createStudent(studentData) {
 /**
  * Event listener for submit button.
  */
-document.getElementById("studentForm").addEventListener("submit", function(e){
+document.getElementById("studentForm").addEventListener("submit", function(e) {
     e.preventDefault();
 
     if(!validateStudentForm()) {
@@ -81,7 +81,8 @@ function validateStudentForm() {
         firstName.classList.add("invalid");
         isValid = false;
     } else if (firstName.value.trim().length < 2) {
-        firstNameError.textContent = "First name must be at least 2 characters long.";
+        firstNameError.textContent =
+                        "First name must be at least 2 characters long.";
         firstName.classList.add("invalid");
         isValid = false;
     }
@@ -91,7 +92,8 @@ function validateStudentForm() {
         lastName.classList.add("invalid");
         isValid = false;
     } else if (firstName.value.trim().length < 2) {
-        lastNameError.textContent = "Last name must be at least 2 characters long.";
+        lastNameError.textContent = 
+                        "Last name must be at least 2 characters long.";
         lastName.classList.add("invalid");
         isValid = false;
     }
@@ -107,7 +109,8 @@ function validateStudentForm() {
         email.classList.add("invalid");
         isValid = false;
     } else if (!emailRegex.test(emailValue)) {
-        emailError.textContent = "Please enter a valid email address (e.g. ex@ample.com)"
+        emailError.textContent = 
+                    "Please enter a valid email address (e.g. ex@ample.com)"
         email.classList.add("invalid");
         isValid = false;
     }
@@ -251,7 +254,7 @@ async function deleteStudent(id) {
 }
 
 /**
- * For Log-In.
+ * Method for Log-In.
  */
 async function loginUser(loginDto) {
     try {
@@ -292,7 +295,8 @@ async function logoutUser() {
             await fetch(API_URL, {
                 method: "GET",
                 headers: {
-                    "Authorization": "Basic " + btoa("invalid_user:wrong_password")
+                    "Authorization": "Basic " 
+                    + btoa("invalid_user:wrong_password")
                 }
             });
         } catch (e) {

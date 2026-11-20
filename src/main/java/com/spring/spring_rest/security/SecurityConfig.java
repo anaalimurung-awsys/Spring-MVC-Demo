@@ -44,11 +44,15 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity sec) throws Exception {
         return sec.cors(cors -> cors.configure(sec))
                     .csrf(AbstractHttpConfigurer::disable)
-                    .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
+                    .sessionManagement(session -> 
+                        session.sessionCreationPolicy(
+                            SessionCreationPolicy.IF_REQUIRED))
                     .authorizeHttpRequests(auth -> auth
                             .requestMatchers("/api/auth/**").permitAll()
-                            .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                            .requestMatchers("/api/students/**").hasAnyAuthority("USER", "ADMIN")
+                            .requestMatchers(HttpMethod.OPTIONS, "/**")
+                                .permitAll()
+                            .requestMatchers("/api/students/**")
+                                .hasAnyAuthority("USER", "ADMIN")
                             .anyRequest()
                             .authenticated())
                     .httpBasic(Customizer.withDefaults())
@@ -86,6 +90,10 @@ public class SecurityConfig {
         return authentication.getAuthenticationManager();
     }
 
+    /**
+     * For cross origin configuration.
+     * @return
+     */
     @Bean 
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration conf =  new CorsConfiguration();
@@ -100,7 +108,8 @@ public class SecurityConfig {
                                                 "Content-Type"));               
         conf.setAllowCredentials(true);
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        UrlBasedCorsConfigurationSource source = 
+                new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", conf);
 
         return source;

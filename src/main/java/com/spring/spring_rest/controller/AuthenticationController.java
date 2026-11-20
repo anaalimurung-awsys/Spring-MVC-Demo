@@ -143,32 +143,47 @@ public class AuthenticationController {
     public ResponseEntity<String> login (@RequestBody 
         AuthLoginDto authLoginDto) {
         Authentication authenticate = authManager.authenticate(
-            new UsernamePasswordAuthenticationToken(authLoginDto.getUsername(), 
-                                                    authLoginDto.getPassword()));
+            new UsernamePasswordAuthenticationToken(
+                                    authLoginDto.getUsername(), 
+                                    authLoginDto.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authenticate);
         return new ResponseEntity<>("Signed in successfully!", HttpStatus.OK);
     }
 
+    /**
+     * Method to login.
+     * @param authLoginDto
+     * @param req
+     * @return
+     */
     @PostMapping("/auth_login_session")
-    public ResponseEntity<?> loginWithSession(@RequestBody AuthLoginDto authLoginDto,
-                                                HttpServletRequest req) {
+    public ResponseEntity<?> loginWithSession(
+                                    @RequestBody AuthLoginDto authLoginDto,
+                                    HttpServletRequest req) {
         Authentication auth = authManager.authenticate(
-            new UsernamePasswordAuthenticationToken(authLoginDto.getUsername(), 
+            new UsernamePasswordAuthenticationToken(authLoginDto.getUsername(),
                                                     authLoginDto.getPassword())
         );
 
         SecurityContextHolder.getContext().setAuthentication(auth);
         HttpSession ses = req.getSession(true);
-        ses.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
+        ses.setAttribute("SPRING_SECURITY_CONTEXT",
+                            SecurityContextHolder.getContext());
 
         Map<String, String> response = new HashMap<>();
 
-        response.put("message", "Authenticated successfully via session cookie");
+        response.put("message", 
+                    "Authenticated successfully via session cookie");
 
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * Method to logout.
+     * @param req
+     * @return
+     */
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest req) {
         HttpSession ses = req.getSession(false);
