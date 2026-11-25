@@ -30,6 +30,8 @@ public class CustomUserDetailsService implements UserDetailsService {
         return authUserRepo;
     }
 
+    /**    (non-Javadoc)
+     */
     @Override
     public UserDetails loadUserByUsername(String username) 
         throws UsernameNotFoundException {

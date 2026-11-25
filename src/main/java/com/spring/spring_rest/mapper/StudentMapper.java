@@ -11,7 +11,7 @@ public class StudentMapper {
     /**
      * Method that will map Student to StudentDto
      * @param stud
-     * @return
+     * @return new StudentDto stud
      */
     public static StudentDto mapToStudentDto(Student stud) {
         return new StudentDto(stud.getId(), 
@@ -23,7 +23,7 @@ public class StudentMapper {
     /**
      * Method that will map StudentDto to Student
      * @param studDto
-     * @return
+     * @return new StudentDto stud
      */
     public static Student mapToStudent(StudentDto studDto) {
         return new Student(studDto.getId(),

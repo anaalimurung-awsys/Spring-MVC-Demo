@@ -30,7 +30,9 @@ public class StudentServiceImpl implements StudentService {
         this.studRepo = studRepo;
     }
     
-
+    /** Create method.
+     *  return StudentMapper    
+    */
     @Override
     public StudentDto createStudent(StudentDto studDto) {
         // converting StudentDto to Student entity
@@ -40,7 +42,7 @@ public class StudentServiceImpl implements StudentService {
         // Student is converted back to StudentDto
         return StudentMapper.mapToStudentDto(saved);
     }
-
+    
     @Override
     public StudentDto getStudentById(Long id) {
        Student stud = studRepo.findById(id).

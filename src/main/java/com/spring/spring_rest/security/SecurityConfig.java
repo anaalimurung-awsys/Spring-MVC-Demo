@@ -1,20 +1,17 @@
 package com.spring.spring_rest.security;
 
 import java.util.Arrays;
+import com.spring.spring_rest.service.CustomUserDetailsService;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.
-        authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.
-        annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.
-        annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.
-        annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -22,7 +19,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.spring.spring_rest.service.CustomUserDetailsService;
 
 @EnableWebSecurity 
 @Configuration 
@@ -37,7 +33,7 @@ public class SecurityConfig {
     /**
      * Function to filter requests.
      * @param sec
-     * @return
+     * @return sec.cors()
      * @throws Exception
      */
     @Bean 
@@ -70,7 +66,7 @@ public class SecurityConfig {
 
     /**
      * Hashes passwords before saving to database.
-     * @return
+     * @return new BCryptPasswordEncoder()
      */
     @Bean 
     BCryptPasswordEncoder passwordEncoder() {
@@ -80,7 +76,7 @@ public class SecurityConfig {
     /**
      * Method to manually authenticate users.
      * @param authentication
-     * @return
+     * @return authentication.getAuthenticationManager()
      * @throws Exception
      */
     @Bean 
@@ -92,7 +88,7 @@ public class SecurityConfig {
 
     /**
      * For cross origin configuration.
-     * @return
+     * @return new UrlBasedCorsConfiguration source 
      */
     @Bean 
     CorsConfigurationSource corsConfigurationSource() {
