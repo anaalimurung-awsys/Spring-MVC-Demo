@@ -157,8 +157,14 @@ async function getAllStudents() {
                     <td>${stud.lastName}</td>
                     <td>${stud.email}</td>
                     <td>
-                        <button class="btn-edit" onclick="initializeStudentFormById(${stud.id})">Edit</button>
-                        <button class="btn-delete" onclick="deleteStudent(${stud.id})">Delete</button>
+                        <button class="btn-edit" 
+                            onclick="initializeStudentFormById(${stud.id})">
+                                Edit
+                        </button>
+                        <button class="btn-delete" 
+                            onclick="deleteStudent(${stud.id})">
+                                Delete
+                        </button>
                     </td>
                 </tr>
             `;
